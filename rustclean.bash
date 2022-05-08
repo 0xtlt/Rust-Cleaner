@@ -9,15 +9,14 @@ for file in $(find $dir -name "Cargo.toml"); do
   # Check if the file contains /node_modules/ and echo the path if not
   if ! [[ $file =~ "/node_modules/" ]]; then
     # Set a variable with the path to the parent folder with the target one
-    parent_dir=$(dirname $file)/target
+    parent_dir=$(dirname $file)
 
-    # Check if the parent folder exists
-    if [ -d $parent_dir ]; then
-      # Delete the folder and the files inside it
-      rm -r $parent_dir
+    cd $parent_dir
 
-      echo "$parent_dir deleted"
-    fi
+    # Clean it
+    cargo clean
+
+    echo "$parent_dir cleaned"
   fi
 done
 
